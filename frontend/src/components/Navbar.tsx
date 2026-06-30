@@ -44,7 +44,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-3 text-white font-bold text-xl group">
           <img 
-            src="/assets/logo.png" 
+            src="/logo.png" 
             alt="Suman Travels Logo" 
             className="h-10 w-10 object-contain rounded-full border border-white/10 group-hover:scale-105 transition-transform duration-300" 
           />

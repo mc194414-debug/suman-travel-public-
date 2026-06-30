@@ -17,29 +17,45 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
 
-    // Admin credentials — multiple admins supported
-    const ADMIN_ACCOUNTS = [
-      {
-        email: process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'sanjayindia6666@gmail.com',
-        password: process.env.NEXT_PUBLIC_ADMIN_PASS  || 'SumanAdmin@2026',
-        name: 'Sanjay Choudhary',
-      },
-      {
-        email: 'shivachoudhary4235@gmail.com',
-        password: 'SuMAN#@20092@project',
-        name: 'Shiva Choudhary',
-      },
-    ];
-
     await new Promise((r) => setTimeout(r, 800)); // Simulate auth delay
 
-    const matched = ADMIN_ACCOUNTS.find(
-      (a) => a.email === email && a.password === password
+    // Fetch dynamic accounts or fallback to default
+    let accountsStr = null;
+    if (typeof window !== 'undefined') {
+      accountsStr = localStorage.getItem('suman_admin_accounts');
+    }
+    
+    let adminAccounts = [];
+    if (accountsStr) {
+      adminAccounts = JSON.parse(accountsStr);
+    } else {
+      adminAccounts = [
+        {
+          email: process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'sanjayindia6666@gmail.com',
+          password: process.env.NEXT_PUBLIC_ADMIN_PASS || 'SumanAdmin@2026',
+          name: 'Sanjay Choudhary',
+          role: 'admin'
+        },
+        {
+          email: 'shivachoudhary4235@gmail.com',
+          password: 'SuMAN#@20092@project',
+          name: 'Shiva Choudhary',
+          role: 'admin'
+        }
+      ];
+      // Save defaults so they can be edited later
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('suman_admin_accounts', JSON.stringify(adminAccounts));
+      }
+    }
+
+    const matched = adminAccounts.find(
+      (a: any) => a.email === email && a.password === password
     );
 
     if (matched) {
-      setCookie('suman_admin', { email: matched.email, role: 'admin', name: matched.name, loginAt: Date.now() }, 1);
-      setCookie('suman_user',  { email: matched.email, name: matched.name, role: 'admin' }, 1);
+      setCookie('suman_admin', { email: matched.email, role: matched.role || 'admin', name: matched.name, loginAt: Date.now() }, 1);
+      setCookie('suman_user',  { email: matched.email, name: matched.name, role: matched.role || 'admin' }, 1);
       router.push('/admin');
     } else {
       setError('Invalid admin credentials. Please try again.');

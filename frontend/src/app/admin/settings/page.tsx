@@ -96,12 +96,40 @@ export default function SettingsPage() {
   const effectiveRate = useLive && liveRate ? liveRate : parseFloat(manualRate) || 83.5;
 
   // ── User Roles ────────────────────────────────────────────
-  const [users] = useState([
-    { name: 'Sanjay Choudhary', email: 'sanjayindia6666@gmail.com',    role: 'admin' },
-    { name: 'Shiva Choudhary',  email: 'shivachoudhary4235@gmail.com', role: 'admin' },
-    { name: 'Staff 1',          email: 'staff@sumantravel.com',         role: 'staff' },
-    { name: 'Accountant',       email: 'accounts@sumantravel.com',      role: 'accountant' },
-  ]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [editingUser, setEditingUser] = useState<any>(null);
+
+  useEffect(() => {
+    const accountsStr = localStorage.getItem('suman_admin_accounts');
+    if (accountsStr) {
+      setUsers(JSON.parse(accountsStr));
+    } else {
+      setUsers([
+        { name: 'Sanjay Choudhary', email: 'sanjayindia6666@gmail.com', role: 'admin', password: 'SumanAdmin@2026' },
+        { name: 'Shiva Choudhary',  email: 'shivachoudhary4235@gmail.com', role: 'admin', password: 'SuMAN#@20092@project' },
+      ]);
+    }
+  }, []);
+
+  const saveUser = () => {
+    let newUsers = [...users];
+    if (editingUser.isNew) {
+      newUsers.push({ name: editingUser.name, email: editingUser.email, role: editingUser.role, password: editingUser.password });
+    } else {
+      newUsers = newUsers.map(u => u.email === editingUser.oldEmail ? { name: editingUser.name, email: editingUser.email, role: editingUser.role, password: editingUser.password } : u);
+    }
+    setUsers(newUsers);
+    localStorage.setItem('suman_admin_accounts', JSON.stringify(newUsers));
+    setEditingUser(null);
+  };
+
+  const deleteUser = (email: string) => {
+    if(confirm('Are you sure you want to remove this user?')) {
+      const newUsers = users.filter(u => u.email !== email);
+      setUsers(newUsers);
+      localStorage.setItem('suman_admin_accounts', JSON.stringify(newUsers));
+    }
+  };
 
   // ── Notifications ─────────────────────────────────────────
   const [notif, setNotif] = useState({
@@ -312,7 +340,12 @@ export default function SettingsPage() {
       {/* ── Section 3: User Roles ──────────────────────────── */}
       {activeSection === 3 && (
         <GlassCard>
-          <h2 className="text-white font-semibold mb-5">User Roles & Permissions</h2>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-white font-semibold">User Roles & Permissions</h2>
+            <button onClick={() => setEditingUser({ isNew: true, name: '', email: '', role: 'admin', password: '' })} className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#FF6B4A]/10 text-[#FF6B4A] hover:bg-[#FF6B4A]/20 transition-colors">
+              + Add User
+            </button>
+          </div>
           <div className="space-y-3 mb-6">
             {users.map((u, i) => (
               <div key={i} className="flex items-center justify-between p-4 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)' }}>
@@ -329,10 +362,44 @@ export default function SettingsPage() {
                   <span className="text-xs px-2.5 py-1 rounded-full capitalize font-semibold" style={{ background: u.role === 'admin' ? 'rgba(255,107,74,0.15)' : 'rgba(255,255,255,0.08)', color: u.role === 'admin' ? '#FF6B4A' : 'rgba(255,255,255,0.5)' }}>
                     {u.role}
                   </span>
+                  <button onClick={() => setEditingUser({ ...u, oldEmail: u.email })} className="text-xs text-[#FF6B4A] hover:underline px-2">Edit</button>
+                  <button onClick={() => deleteUser(u.email)} className="text-xs text-red-400 hover:underline">Remove</button>
                 </div>
               </div>
             ))}
           </div>
+
+          {editingUser && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+              <div className="bg-[#1A1A1A] p-6 rounded-2xl w-full max-w-md border border-white/10 space-y-4">
+                <h3 className="text-white font-semibold text-lg">{editingUser.isNew ? 'Add User' : 'Edit User Profile'}</h3>
+                <div>
+                  <Label>Name</Label>
+                  <Input value={editingUser.name} onChange={(e: any) => setEditingUser({ ...editingUser, name: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Email (Login ID)</Label>
+                  <Input type="email" value={editingUser.email} onChange={(e: any) => setEditingUser({ ...editingUser, email: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Password</Label>
+                  <Input type="text" value={editingUser.password} onChange={(e: any) => setEditingUser({ ...editingUser, password: e.target.value })} placeholder="Leave blank to keep unchanged" />
+                </div>
+                <div>
+                  <Label>Role</Label>
+                  <Select value={editingUser.role} onChange={(e: any) => setEditingUser({ ...editingUser, role: e.target.value })}>
+                    <option value="admin">Admin</option>
+                    <option value="staff">Staff</option>
+                    <option value="accountant">Accountant</option>
+                  </Select>
+                </div>
+                <div className="flex space-x-3 pt-3">
+                  <button onClick={() => setEditingUser(null)} className="flex-1 py-2 rounded-xl text-white/70 font-semibold hover:bg-white/5 transition-colors">Cancel</button>
+                  <button onClick={saveUser} className="flex-1 py-2 rounded-xl bg-[#FF6B4A] text-white font-semibold hover:bg-[#ff5530] transition-colors">Save Details</button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Role Permissions Table */}
           <div className="overflow-x-auto">

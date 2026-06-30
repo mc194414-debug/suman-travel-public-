@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="space-y-4">
           <div className="flex items-center space-x-3 text-white font-bold text-xl">
             <img 
-              src="/assets/logo.png" 
+              src="/logo.png" 
               alt="Suman Travels Logo" 
               className="h-12 w-12 object-contain rounded-full border border-white/10" 
             />
