@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scroll Frame Animation</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      /* Creates scroll space without adding extra sections/components */
+      body {
+        background: #000;
+      }
+
+      .frame-stage {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        overflow: hidden;
+        background: #000;
+      }
+
+      img#frame {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: auto;
+        display: block;
+        transform: translateZ(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame-stage" aria-hidden="true">
+      <img id="frame" alt="" src="frame_001.png" />
+    </div>
+
+    <script>
+      (() => {
+        const img = document.getElementById("frame");
+        const totalFrames = 200;
+
+        // Ensure scroll progress has enough room to traverse all frames.
+        // No extra sections/components—just scroll height.
+        const scrollPixels = 3000;
+
+        let ticking = false;
+
+        function clamp(n, min, max) {
+          return Math.max(min, Math.min(max, n));
+        }
+
+        function setFrameByProgress(progress) {
+          const p = clamp(progress, 0, 1);
+          const index = Math.floor(p * (totalFrames - 1)) + 1; // 1..totalFrames
+          const frameName = String(index).padStart(3, "0");
+          img.src = `frame_${frameName}.png`;
+        }
+
+        function onScroll() {
+          if (ticking) return;
+          ticking = true;
+
+          requestAnimationFrame(() => {
+            const doc = document.documentElement;
+            const scrollTop = doc.scrollTop || document.body.scrollTop || 0;
+            const maxScroll = Math.max(1, doc.scrollHeight - doc.clientHeight);
+            const progress = scrollTop / maxScroll;
+
+            setFrameByProgress(progress);
+
+            ticking = false;
+          });
+        }
+
+        // Set scroll height once layout is ready
+        function initScrollHeight() {
+          // Use the current document height if it's already larger.
+          const target = Math.max(document.body.scrollHeight, scrollPixels);
+          document.body.style.minHeight = `${target}px`;
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+
+        initScrollHeight();
+        setFrameByProgress(0);
+        onScroll();
+      })();
+    </script>
+  </body>
+</html>
