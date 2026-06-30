@@ -148,19 +148,14 @@ export default function Home() {
                 }}
                 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-white drop-shadow-xl flex flex-col items-start"
               >
-                <div className="flex gap-4">
-                  <div className="overflow-hidden pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block">Mumbai's</motion.span></div>
-                  <div className="overflow-hidden pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block">Elite</motion.span></div>
+                <div className="flex gap-4 flex-wrap">
+                  <div className="overflow-hidden pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-white">Premium Car</motion.span></div>
+                  <div className="overflow-hidden pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-white">Rental</motion.span></div>
                 </div>
-                <div className="flex gap-4 mt-2">
+                <div className="flex gap-4 mt-2 flex-wrap">
                   <div className="overflow-hidden pb-4">
                     <motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent-primary via-orange-400 to-yellow-400 drop-shadow-[0_0_30px_rgba(255,107,71,0.3)]">
-                      Travel
-                    </motion.span>
-                  </div>
-                  <div className="overflow-hidden pb-4">
-                    <motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent-primary via-orange-400 to-yellow-400 drop-shadow-[0_0_30px_rgba(255,107,71,0.3)]">
-                      Experience
+                      Near Mumbai
                     </motion.span>
                   </div>
                 </div>
@@ -171,9 +166,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-                className="text-lg md:text-xl text-text-secondary max-w-xl font-light leading-relaxed"
+                className="text-lg md:text-xl text-white/90 max-w-2xl font-medium leading-relaxed drop-shadow-md"
               >
-                Unmatched luxury, absolute reliability, and professional chauffeurs ready to serve your every travel need across Maharashtra.
+                Top-rated luxury chauffeur & car rental near Mumbai. Trusted by foreigners & locals for safe airport transfers, local trips, and outstation rides across Maharashtra.
               </motion.p>
               
               <motion.div 
