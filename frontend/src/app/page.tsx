@@ -112,24 +112,24 @@ export default function Home() {
         </div>
 
         {/* Foreground text and forms (starts at opacity 0, fades in on scroll) */}
-        <div className="relative z-10 max-w-[1280px] mx-auto px-6 w-full pt-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center transition-all duration-700 ease-out">
+        <div className="relative z-10 max-w-[1280px] mx-auto px-6 w-full pt-32 pb-20 md:pt-24 lg:pt-32">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center transition-all duration-700 ease-out">
             {/* Hero Left Content */}
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-7 space-y-6 text-left"
+              className="lg:col-span-7 space-y-5 md:space-y-6 text-left mt-8 md:mt-0"
             >
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.1, ease: "backOut" }}
-                className="inline-flex px-5 py-2 rounded-full border border-accent-primary/30 bg-black/40 backdrop-blur-sm"
+                className="inline-flex px-4 py-1.5 md:px-5 md:py-2 rounded-full border border-accent-primary/30 bg-black/40 backdrop-blur-sm"
               >
-                <span className="text-accent-primary font-bold text-sm tracking-widest uppercase flex items-center gap-2">
+                <span className="text-accent-primary font-bold text-xs md:text-sm tracking-widest uppercase flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-accent-primary animate-ping"></span> 
                   Premium Chauffeur Service
                 </span>
@@ -146,14 +146,14 @@ export default function Home() {
                     transition: { staggerChildren: 0.1, delayChildren: 0.2 }
                   }
                 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-white drop-shadow-xl flex flex-col items-start"
+                className="text-4xl md:text-6xl lg:text-7xl font-black mb-4 md:mb-6 leading-[1.2] md:leading-[1.1] tracking-tight text-white drop-shadow-xl flex flex-col items-start"
               >
-                <div className="flex gap-4 flex-wrap">
-                  <div className="overflow-hidden pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-white">Premium Car</motion.span></div>
-                  <div className="overflow-hidden pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-white">Rental</motion.span></div>
+                <div className="flex gap-3 md:gap-4 flex-wrap">
+                  <div className="overflow-hidden pb-1 md:pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-white">Premium Car</motion.span></div>
+                  <div className="overflow-hidden pb-1 md:pb-2"><motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-white">Rental</motion.span></div>
                 </div>
-                <div className="flex gap-4 mt-2 flex-wrap">
-                  <div className="overflow-hidden pb-4">
+                <div className="flex gap-3 md:gap-4 mt-1 md:mt-2 flex-wrap">
+                  <div className="overflow-hidden pb-2 md:pb-4">
                     <motion.span variants={{ hidden: { y: "100%", opacity: 0, rotateZ: 5 }, show: { y: 0, opacity: 1, rotateZ: 0, transition: { type: "spring", damping: 15, stiffness: 80 } } }} className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent-primary via-orange-400 to-yellow-400 drop-shadow-[0_0_30px_rgba(255,107,71,0.3)]">
                       Near Mumbai
                     </motion.span>
