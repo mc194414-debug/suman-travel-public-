@@ -99,7 +99,7 @@ export default function Home() {
       <Navbar />
       
       {/* 1. Hero Section */}
-      <div className="relative h-screen bg-black z-10 w-full flex items-center overflow-hidden">
+      <div className="relative min-h-screen bg-black z-10 w-full flex items-center overflow-hidden">
         {/* Static Animated Background with Parallax */}
         <div className="absolute inset-0 w-full h-full z-0 bg-black overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/80 via-black/40 to-bg-primary z-10"></div>
