@@ -69,7 +69,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               className="bg-black rounded-full flex items-center justify-center shrink-0 overflow-hidden"
               style={{ width: '64px', height: '64px', border: '2px solid #FF6B35' }}
             >
-              <img src="/assets/logo.png" alt="Logo" className="w-full h-full object-contain" style={{ padding: '4px' }} />
+              <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" style={{ padding: '4px' }} />
             </div>
             <div className="flex flex-col shrink-0">
               <h1 className="font-black tracking-widest uppercase leading-none whitespace-nowrap" style={{ fontSize: '20px', marginBottom: '4px' }}>SUMAN TRAVELS</h1>
